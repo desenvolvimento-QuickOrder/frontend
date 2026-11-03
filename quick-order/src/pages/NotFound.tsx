@@ -1,6 +1,6 @@
 export function NotFound() {
     return (
-        <div className="w-screen h-screen flex justify-center items-center">
+        <main className="w-screen h-screen flex justify-center items-center">
             <div className="flex flex-col">
                 <h1 className="font-semibold text-2xl mb-5">
                     Ops! Essa página não existe. 🥲
@@ -10,6 +10,6 @@ export function NotFound() {
                     Voltar para o início
                 </a>
             </div>
-        </div>
+        </main>
     );
 }
