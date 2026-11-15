@@ -5,7 +5,7 @@ import { SelectButton } from './SelectButton';
 export type TableStatus = 'livre' | 'ocupada' | 'aguardando_pedido' | 'aguardando_conta';
 
 interface TableCardProps {
-    tableNumber: number;
+    tableNumber: number | string;
     capacity: number;
     status: TableStatus;
     orderNumber?: number;
@@ -47,7 +47,9 @@ export function TableCard({
                     <div
                         className={`w-3 h-3 rounded-full mr-1.25 ${statusConfig[status].dotColor}`}
                     />
-                    <p className="text-lg">Mesa {tableNumber}</p>
+                    <p className="text-lg">
+                        {typeof tableNumber === 'number' ? `Mesa ${tableNumber}` : tableNumber}
+                    </p>
                 </div>
 
                 <div className="flex items-center">

@@ -4,15 +4,18 @@ import { Plus } from "iconoir-react";
 import { Button } from "../components/Button";
 import { TableCard, type TableStatus } from "../components/TableCard";
 import { ChangeTableStatusModal } from "../components/modals/ChangeTableStatusModal";
+import { CreateTableModal } from "../components/modals/CreateTableModal";
 
 interface TableData {
     id: number;
-    tableNumber: number;
+    tableNumber: number | string;
     capacity: number;
     status: TableStatus;
     orderNumber?: number;
     timeElapsed?: string;
 }
+
+const CAPACITIES = [2, 4, 6, 8];
 
 export function Tables() {
     const [tables, setTables] = useState<TableData[]>([
@@ -25,10 +28,24 @@ export function Tables() {
         },
     ]);
 
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
     const [pendingChange, setPendingChange] = useState<{
         tableId: number;
         newStatus: TableStatus;
     } | null>(null);
+
+    function handleCreateTable(tableName: string, capacity: number) {
+        const newTable: TableData = {
+            id: Date.now(),
+            tableNumber: tableName,
+            capacity: capacity,
+            status: "livre",
+            timeElapsed: "0min",
+        };
+
+        setTables((prevTables) => [...prevTables, newTable]);
+    }
 
     function handleRequestStatusChange(table: TableData, newStatus: TableStatus) {
         if (table.status === "livre" && newStatus !== "livre") {
@@ -71,7 +88,10 @@ export function Tables() {
         <main>
             <header className="flex justify-between items-center">
                 <h1 className="text-4xl">Controle de Mesas</h1>
-                <Button variant="icon">
+                <Button 
+                    variant="icon"
+                    onClick={() => setIsCreateModalOpen(true)}
+                >
                     <Plus />
                     Cadastrar Mesa
                 </Button>
@@ -103,25 +123,39 @@ export function Tables() {
                 </div>
             </section>
 
-            <section className="mt-12.5">
-                <h3 className="text-xl">Mesas para 2 pessoas</h3>
+            {CAPACITIES.map((cap) => {
+                const tablesInSection = tables.filter((t) => t.capacity === cap);
 
-                <div className="flex items-center gap-5 mt-5">
-                    {tables.map((table) => (
-                        <TableCard
-                            key={table.id}
-                            tableNumber={table.tableNumber}
-                            capacity={table.capacity}
-                            status={table.status}
-                            orderNumber={table.orderNumber}
-                            timeElapsed={table.timeElapsed}
-                            onStatusChange={(newStatus) =>
-                                handleRequestStatusChange(table, newStatus)
-                            }
-                        />
-                    ))}
-                </div>
-            </section>
+                if (tablesInSection.length === 0) return null;
+
+                return (
+                    <section key={cap} className="mt-12.5">
+                        <h3 className="text-xl">Mesas para {cap} pessoas</h3>
+
+                        <div className="flex flex-wrap items-center gap-5 mt-5">
+                            {tablesInSection.map((table) => (
+                                <TableCard
+                                    key={table.id}
+                                    tableNumber={table.tableNumber}
+                                    capacity={table.capacity}
+                                    status={table.status}
+                                    orderNumber={table.orderNumber}
+                                    timeElapsed={table.timeElapsed}
+                                    onStatusChange={(newStatus) =>
+                                        handleRequestStatusChange(table, newStatus)
+                                    }
+                                />
+                            ))}
+                        </div>
+                    </section>
+                );
+            })}
+
+            <CreateTableModal
+                isOpen={isCreateModalOpen}
+                onClose={() => setIsCreateModalOpen(false)}
+                onCreate={handleCreateTable}
+            />
 
             <ChangeTableStatusModal
                 isOpen={pendingChange !== null}
