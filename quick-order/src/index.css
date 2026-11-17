@@ -33,3 +33,10 @@
     --color-light-blue: #4AB9FF;
     --color-background-gray: #F9FAFB;
 }
+
+select {
+  appearance: none;
+  background-image: url("./assets/nav-arrow-down.svg");
+  background-repeat: no-repeat;
+  background-size: 1.25rem auto;
+}
