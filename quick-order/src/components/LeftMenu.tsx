@@ -25,7 +25,9 @@ export function LeftMenu() {
             <section className="mx-13.75 mt-7.5 flex flex-col gap-4">
                 {menuItems.map((item) => {
                     const path = item.id === 'dashboard' ? '/' : `/${item.id}`;
-                    const isActive = location.pathname === path;
+                    const isActive = item.id === 'configuracoes'
+                        ? location.pathname.startsWith(path)
+                        : location.pathname === path;
                     const IconComponent = item.Icon;
 
                     return (

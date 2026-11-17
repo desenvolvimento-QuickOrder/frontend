@@ -7,7 +7,7 @@ export function AppLayout() {
         <div className="bg-background-gray min-h-screen flex">
             <LeftMenu />
 
-            <main className="flex-1 md:ml-90 pt-15 px-12.5">
+            <main className="min-w-0 flex-1 md:ml-90 pt-15 px-12.5">
                 <Outlet />
             </main>
         </div>

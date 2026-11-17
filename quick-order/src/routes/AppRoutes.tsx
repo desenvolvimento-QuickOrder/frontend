@@ -8,6 +8,7 @@ import { Menu } from "../pages/Menu";
 import { Tables } from "../pages/Tables";
 import { Payments } from "../pages/Payments";
 import { Settings } from "../pages/Settings";
+import { ManageUsers } from "../pages/ManageUsers";
 import { NotFound } from "../pages/NotFound";
 
 export function AppRoutes() {
@@ -20,6 +21,7 @@ export function AppRoutes() {
                 <Route path="/mesas" element={<Tables />} />
                 <Route path="/pagamentos" element={<Payments />} />
                 <Route path="/configuracoes" element={<Settings />} />
+                <Route path="/configuracoes/gerenciar-usuarios" element={<ManageUsers />} />
             </Route>
 
             <Route path="*" element={<NotFound />} />
