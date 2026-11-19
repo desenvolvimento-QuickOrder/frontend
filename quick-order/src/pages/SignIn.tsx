@@ -7,7 +7,7 @@ export function SignIn() {
   const { signIn } = useAuth();
   const navigate = useNavigate();
 
-  const [restaurante, setRestaurante] = useState("");
+  // const [restaurante, setRestaurante] = useState("");
   const [login, setLogin] = useState("");
   const [senha, setSenha] = useState("");
   const [manterConectado, setManterConectado] = useState(false);
@@ -20,7 +20,7 @@ export function SignIn() {
     setCarregando(true);
 
     try {
-      await signIn({ restaurante, login, senha });
+      await signIn({ login, senha });
       navigate("/");
     } catch (e) {
       setErro(e instanceof Error ? e.message : "Erro ao fazer login.");
@@ -53,7 +53,7 @@ export function SignIn() {
           <img src={logo} alt="QuickOrder" className="mx-auto mb-12 h-40" />
 
           <div className="space-y-6">
-            <div className="space-y-2">
+            {/* <div className="space-y-2">
               <label htmlFor="restaurante" className={label}>
                 Restaurante
               </label>
@@ -68,7 +68,7 @@ export function SignIn() {
                 required
                 className={campo}
               />
-            </div>
+            </div> */}
 
 
             <div className="space-y-2">
