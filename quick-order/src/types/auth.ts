@@ -1,5 +1,5 @@
 export interface LoginRequest {
-  restaurante: string;
+  // restaurante: string;
   login: string;
   senha: string;
 }
